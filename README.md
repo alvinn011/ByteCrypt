@@ -2,7 +2,7 @@
 
 a simple password manager built in Rust.
 
-**Note**: This program is not meant to be secure. Please do not use it for critical real-world situations.
+**Note**: This program is not meant to be secure nor efficient. Please do not use it for critical real-world situations.
 
 ## Features
 
