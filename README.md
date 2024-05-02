@@ -30,7 +30,7 @@ $ bytecrypt
 
 ## Installation
 ```
-cago build --release
+$ cago build --release
 $ sudo mv /path/to/your/executable /usr/local/bin
 ```
 
