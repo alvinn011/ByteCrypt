@@ -37,7 +37,8 @@ $ sudo mv /path/to/your/executable /usr/local/bin
 ## Contributions
 
 Contributions to ByteCrypt are welcome! If you have any suggestions or improvements, feel free to open an issue or a pull request.
-License
+
+## License
 
 This project is licensed under the MIT License.
 
