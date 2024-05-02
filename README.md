@@ -21,8 +21,6 @@ a simple password manager built in Rust.
 - `help`: Lists all available commands.
 - `clear`: Clears the screen.
 
-With a little bit of trial and error, you can easily make it a global program by moving the executable to `/usr/local/bin` and changing the temporary folder location to avoid any collisions.
-
 ## Usage
 ```
 $ bytecrypt
