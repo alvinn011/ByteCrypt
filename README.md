@@ -1,6 +1,6 @@
-# Password Manager
+# ByteCrypt
 
-This is a simple password manager built in Rust (tested on Ubuntu 23.10). 
+a simple password manager built in Rust.
 
 **Note**: This program is not meant to be secure. Please do not use it for critical real-world situations.
 
@@ -46,3 +46,5 @@ This project is licensed under the MIT License.
 $ bytecrypt --version
 ByteCrypt 1.0.0
 ```
+
+(fully tested on ubuntu 23.10)
