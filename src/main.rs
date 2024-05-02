@@ -1,4 +1,5 @@
 use std::collections::btree_map::BTreeMap;
+use std::env;
 use std::fs::{self, File};
 use rand::rngs::OsRng;
 use rsa::pkcs8::der::zeroize::Zeroize;
@@ -19,11 +20,19 @@ use whoami;
 
 
 fn main() {
+    let args:Vec<String> = env::args().collect();
+    if args.len() >= 2 {
+        match args[1].as_str() {
+            "--version" => println!("ByteCrypt v1.0.0"),
+            _ => println!("Error: Invalid args!"),
+        }
+        process::exit(0)
+    }
     println!();
     println!("{}{}{}",Fg(LightRed),LOGO,Fg(Reset));
     println!();
-    match File::open("temp/pass.key") {
-        Ok(_)  => auth("temp/pass.key"),
+    match File::open(std::env::temp_dir().join("bytecrypt/pass.key")) {
+        Ok(_)  => auth(std::env::temp_dir().join("bytecrypt/pass.key").to_str().unwrap()),
         Err(err) => {
             match err.kind() {
                 ErrorKind::NotFound  => {
@@ -64,7 +73,7 @@ fn inner(mut pass:[u8;32]) {
     let (privkey,pubkey) = gen_keypair(&mut rand);
     println!("\n[{}i{}] Loading/creating DB . . .",Fg(LightBlue),Fg(Reset));
     let mut db;
-    if let Ok(metadata) = fs::metadata("temp/main.bin") {
+    if let Ok(metadata) = fs::metadata(std::env::temp_dir().join("bytecrypt/main.bin")) {
         if metadata.len() == 0 {
             db = DB::new()
         }   
@@ -77,7 +86,7 @@ fn inner(mut pass:[u8;32]) {
             db = temp.unwrap();
         }
     }else {
-        println!("[{}X{}] 'temp/main.bin' does not exist! ",Fg(Red),Fg(Reset),);
+        println!("[{}X{}] '{}' does not exist! ",Fg(Red),Fg(Reset),std::env::temp_dir().join("bytecrypt/main.bin").to_str().unwrap());
         println!("        remove the 'temp' folder to redo setup");
         process::exit(-1);
     }
@@ -194,7 +203,7 @@ fn inner(mut pass:[u8;32]) {
                     println!("[{}X{}] Error while saving: {}\n",Fg(Red),Fg(Reset),err);
                     continue;
                 }
-                write_file("temp/main.bin", &v.unwrap());
+                write_file(std::env::temp_dir().join("bytecrypt/main.bin").to_str().unwrap(), &v.unwrap());
                 println!("\nGoodbye!\n");
                 break;
             }
@@ -343,8 +352,9 @@ fn setup() {
     let pass = pad_string(_first.to_owned());
     let hash = hash(&_first);
     println!("\n[{}i{}] Creating temp directory . . .",Fg(LightBlue),Fg(Reset));
-    create_tempdir();
-    write_file("temp/pass.key", &hash);
+    let temp_dir = std::env::temp_dir().join("bytecrypt");
+    create_tempdir(temp_dir.to_str().unwrap().to_string());
+    write_file(temp_dir.join("pass.key").to_str().unwrap(), &hash);
     inner(pass);
     _first.zeroize();
     _second.zeroize();
@@ -377,12 +387,12 @@ fn read_file(path: &str) -> Vec<u8> {
     }
     buf
 }
-fn create_tempdir() {
-    create_dir("temp");
+fn create_tempdir(path: String) {
+    create_dir(&path);
 
-    create_file("temp/pass.key");
+    create_file(&(path.to_owned() + "/pass.key"));
 
-    create_file("temp/main.bin");
+    create_file(&(path + "/main.bin"));
     println!("[{}V{}] Created temp directory",Fg(Green),Fg(Reset))
 }
 
@@ -488,7 +498,7 @@ impl DB {
         Ok(res.unwrap())
     }
     fn load(privkey: RsaPrivateKey) -> Result<Self,String>{
-        let out = read_file("temp/main.bin");
+        let out = read_file(std::env::temp_dir().join("bytecrypt/main.bin").to_str().unwrap());
         let mid = privkey.decrypt(Pkcs1v15Encrypt,&out);
         if let Err(err) = mid {
             return Err(format!("Cant decrypt file because of error: '{}'",err.to_string()));
