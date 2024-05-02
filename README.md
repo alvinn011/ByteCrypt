@@ -1,11 +1,11 @@
-´´´
+'''
  ____        _        ____                  _   
 | __ ) _   _| |_ ___ / ___|_ __ _   _ _ __ | |_ 
 |  _ \| | | | __/ _ \ |   | '__| | | | '_ \| __|
 | |_) | |_| | ||  __/ |___| |  | |_| | |_) | |_ 
 |____/ \__, |\__\___|\____|_|   \__, | .__/ \__|
        |___/                    |___/|_|    
-´´´
+'''
 
 
 
@@ -18,7 +18,7 @@ uses RSA encryption
 uses the b-tree data structure for storing data
 
 commands:
-´´´
+'''
   +
   | 'new'   inserts a new key-value pair
   | 'rm'    removes an existing key-value pair
@@ -31,7 +31,7 @@ commands:
   | 'clear' clears the screen
   +
 
-´´´
+'''
 
 
 with a little of trial and error you can easily make it a global program
