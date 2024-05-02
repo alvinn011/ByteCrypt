@@ -23,25 +23,25 @@ This is a simple password manager built in Rust (tested on Ubuntu 23.10).
 
 With a little bit of trial and error, you can easily make it a global program by moving the executable to `/usr/local/bin` and changing the temporary folder location to avoid any collisions.
 
-##Usage
-'''
+## Usage
+```
 $ bytecrypt
-'''
+```
 
-##Installation
-'''
+## Installation
+```
 cago build --release
 $ sudo mv /path/to/your/executable /usr/local/bin
-'''
+```
 
-##Contributions
+## Contributions
 
 Contributions to ByteCrypt are welcome! If you have any suggestions or improvements, feel free to open an issue or a pull request.
 License
 
 This project is licensed under the MIT License.
 
-'''
+```
 $ bytecrypt --version
 ByteCrypt 1.0.0
-'''
+```
